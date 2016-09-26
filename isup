@@ -1,0 +1,18 @@
+#!/usr/bin/python
+
+'''
+    Checks if a site is up or down
+'''
+import sys
+from bs4 import BeautifulSoup
+import requests
+
+SITE = str(sys.argv[1])
+
+URL = requests.get("http://www.isup.me/" + SITE)
+WEBSITE = URL.content
+SOUP = BeautifulSoup(WEBSITE, 'html.parser')
+if str(SOUP.find_all('div'))[28:42] == "It's just you.":
+    print(SITE + " is up.")
+else:
+    print(SITE + " is down.")
